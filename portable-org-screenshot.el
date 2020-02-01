@@ -26,7 +26,7 @@
 ;; buffer. Detects whether you are on a Windows machine or Linux.
 ;;
 ;; Uses include snippingtool for Windows.
-;; Uses grim and slop for screenshots in sway-wm (wayland).
+;; Uses grim and slurp for screenshots in sway-wm (wayland).
 ;; See grim: https://github.com/emersion/grim
 
 (defun portable-org-screenshot ()
