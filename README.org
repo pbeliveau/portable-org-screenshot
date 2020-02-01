@@ -1,0 +1,22 @@
+* Overview
+Simple package to capture a screenshot from a org buffer and insert it.
+Works out of the box with Sway-wm (Wayland) and Windows 10.
+
+Saves the image in the directory of the org buffer with a timestamp.
+Uses the following software to capture the image:
+- Linux: Grim + Slop for Sway
+- Windows: Included tools (snippingtool)
+* Usage
+Call the function inside an org buffer and it will prompt you to capture a
+region... Done. You can bind the function to a keybinding.
+
+#+BEGIN_SRC emacs-lisp
+(use-package portable-org-screenshot
+    :straight (portable-org-screenshot :type git
+                                       :host github
+                                       :repo "pbeliveau/portable-org-screenshot")
+    :bind ("<f1>" . portable-org-screeshot))
+#+END_SRC
+* Support for other Linux distro
+I built this function for my own niche need. If you are in the same situation as
+me, Windows at work, Sway at home, then I hope it helps you.
