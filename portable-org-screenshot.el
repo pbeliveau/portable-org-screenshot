@@ -34,11 +34,13 @@
 same directory as the org-buffer and insert a link to this file."
   (interactive)
   (setq filename
+      (concat
+       org-directory "/img/"
         (concat
          (make-temp-name
-          (concat (buffer-file-name)
+          (concat (buffer-name)
                   "_"
-                  (format-time-string "%Y%m%d_%H%M%S_")) ) ".png"))
+                  (format-time-string "%Y%m%d_%H%M%S_")) ) ".png")))
 
   (if (eq system-type 'windows-nt)
       (progn
