@@ -52,7 +52,10 @@ same directory as the org-buffer and insert a link to this file."
         (setq region (concat "'" (shell-command-to-string "printf %s \"$(slurp)\"") "'"))
         (shell-command (concat "grim -g " region " " filename))))
 
-  (insert (concat "[[file:" filename "]]"))
+  (setq varfilename
+        (concat "../" (mapconcat 'identity (last (s-split "/" filename) 2) "/")))
+
+  (insert (concat "[[file:" varfilename "]]"))
   (org-display-inline-images))
 
 (provide 'portable-org-screenshot)
