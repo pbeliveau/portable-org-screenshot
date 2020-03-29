@@ -3,7 +3,8 @@
 ;; Author: Philippe Beliveau
 ;; Keywords: screenshot emacs org-mode
 ;; Homepage: https://github.com/pbeliveau/portable-org-screenshot
-;; Version: 0.1
+;; Version: 0.2
+;; Requirements: nircmdc.exe – non-free software to copy to clipboard in windows.
 
 ;; This file is not part of GNU Emacs.
 
@@ -54,6 +55,9 @@ same directory as the org-buffer and insert a link to this file."
 
   (setq varfilename
         (concat "../" (mapconcat 'identity (last (s-split "/" filename) 2) "/")))
+
+  (if (eq system-type 'windows-nt)
+      (shell-command (concat "nircmdc.exe clipboard copyimage " "'" filename "'")))
 
   (insert (concat "[[file:" varfilename "]]"))
   (org-display-inline-images))
