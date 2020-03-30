@@ -4,7 +4,7 @@
 ;; Keywords: screenshot emacs org-mode
 ;; Homepage: https://github.com/pbeliveau/portable-org-screenshot
 ;; Version: 0.2
-;; Requirements: nircmdc.exe – non-free software to copy to clipboard in windows.
+;; Requirements: nircmdc.exe & irfanview – non-free software to copy to clipboard in windows.
 
 ;; This file is not part of GNU Emacs.
 
@@ -26,7 +26,7 @@
 ;; Simple package to capture a screenshot and insert it immediatly in the active
 ;; buffer. Detects whether you are on a Windows machine or Linux.
 ;;
-;; Uses include snippingtool for Windows.
+;; Uses include irfanview for Windows and nircmdc.exe to paste to clipboard.
 ;; Uses grim and slurp for screenshots in sway-wm (wayland).
 ;; See grim: https://github.com/emersion/grim
 
@@ -44,9 +44,7 @@ same directory as the org-buffer and insert a link to this file."
                   (format-time-string "%Y%m%d_%H%M%S_")) ) ".png")))
 
   (if (eq system-type 'windows-nt)
-      (progn
-        (shell-command "snippingtool /clip")
-           (shell-command (concat "powershell -command \"Add-Type -AssemblyName System.Windows.Forms;if ($([System.Windows.Forms.Clipboard]::ContainsImage())) {$image = [System.Windows.Forms.Clipboard]::GetImage();[System.Drawing.Bitmap]$image.Save('" filename "',[System.Drawing.Imaging.ImageFormat]::Png); Write-Output 'clipboard content saved as file'} else {Write-Output 'clipboard does not contain image data'}\""))))
+        (shell-command (concat "irfanview.exe i_view64 /capture=4 /convert=" (replace-regexp-in-string "/" "\\" filename t t))))
 
   (if (eq system-type 'gnu/linux)
       (progn
