@@ -44,18 +44,15 @@ same directory as the org-buffer and insert a link to this file."
                   (format-time-string "%Y%m%d_%H%M%S_")) ) ".png")))
 
   (if (eq system-type 'windows-nt)
-        (shell-command (concat "irfanview.exe i_view64 /capture=4 /convert=" (replace-regexp-in-string "/" "\\" filename t t))))
+      (shell-command (concat "irfanview.exe i_view64 /capture=4 /convert=" (replace-regexp-in-string "/" "\\" filename t t))))
 
-  (if (eq system-type 'gnu/linux)
-      (progn
-        (setq region (concat "'" (shell-command-to-string "printf %s \"$(slurp)\"") "'"))
-        (shell-command (concat "grim -g " region " " filename))))
+    (if (eq system-type 'gnu/linux)
+        (progn
+          (setq region (concat "'" (shell-command-to-string "printf %s \"$(slurp)\"") "'"))
+          (shell-command (concat "grim -g " region " " filename))))
 
   (setq varfilename
         (concat "../" (mapconcat 'identity (last (s-split "/" filename) 2) "/")))
-
-  (if (eq system-type 'windows-nt)
-      (shell-command (concat "nircmdc.exe clipboard copyimage " "'" filename "'")))
 
   (insert (concat "[[file:" varfilename "]]"))
   (org-display-inline-images))
